@@ -113,7 +113,7 @@ def _shift_coordinate(i: int, j: int, move: str) -> tuple[int, int]:
 
 
 if __name__ == "__main__":
-    maze = Maze.from_file("maze_2.txt")
+    maze = Maze.from_file("practicum_2/homework/maze_2.txt")
     t_start = perf_counter()
     solve(maze)
     t_end = perf_counter()

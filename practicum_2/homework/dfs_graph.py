@@ -56,7 +56,7 @@ def topological_sort(G: nx.DiGraph, node: Any):
 
 if __name__ == "__main__":
     # Load and plot the graph
-    G = nx.read_edgelist("graph_2.edgelist", create_using=nx.Graph)
+    G = nx.read_edgelist("practicum_2/homework/graph_2.edgelist", create_using=nx.Graph)
     # plot_graph(G)
 
     print("Iterative DFS")
@@ -65,7 +65,7 @@ if __name__ == "__main__":
     print()
 
     G = nx.read_edgelist(
-        "graph_2.edgelist", create_using=nx.DiGraph
+        "practicum_2/homework/graph_2.edgelist", create_using=nx.DiGraph
     )
     plot_graph(G)
     print("Topological sort")
