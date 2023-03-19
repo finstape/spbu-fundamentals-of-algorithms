@@ -10,27 +10,23 @@ def prim_mst(G: nx.Graph, start_node="0") -> set[tuple[Any, Any]]:
     mst_set = set()  # set of nodes included into MST
     rest_set = set(G.nodes())  # set of nodes not yet included into MST
     mst_edges = set()  # set of edges constituting MST
-    heap = [(0, start_node, None)]
+    mst_set.add(start_node)
+    rest_set.remove(start_node)
 
-    # prime's algorithm
-    while heap:
-        _, current_vertex, predecessor = heappop(heap)
+    while rest_set:
+        new_edge = {"edge": (None, None), "weight": float("inf")}
 
-        if current_vertex not in rest_set:
-            continue
+        # finding the minimum edge
+        for vertex in mst_set:
+            for neighbor, weight in G[vertex].items():
+                if neighbor not in mst_set and weight["weight"] < new_edge["weight"]:
+                    new_edge["edge"] = (vertex, neighbor)
+                    new_edge["weight"] = weight["weight"]
 
-        rest_set.remove(current_vertex)
-
-        if predecessor is not None:
-            mst_edges.add((current_vertex, predecessor))
-
-        mst_set.add(current_vertex)
-
-        # add the neighbors of the current node to the heap
-        for neighbor, weight in G[current_vertex].items():
-            if neighbor not in rest_set:
-                continue
-            heappush(heap, (weight["weight"], neighbor, current_vertex))
+        # minimal edge processing
+        mst_set.add(new_edge["edge"][1])
+        rest_set.remove(new_edge["edge"][1])
+        mst_edges.add(new_edge["edge"])
 
     return mst_edges
 

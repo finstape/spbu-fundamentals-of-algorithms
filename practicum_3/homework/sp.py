@@ -26,7 +26,7 @@ def dijkstra_sp(G: nx.Graph, source_node="0") -> dict[Any, list[Any]]:
                 shortest_paths[neighbor] = shortest_paths.get(current_vertex, []) + [current_vertex]
                 heappush(heap, (new_distance, neighbor))
 
-    # building the shortest path between two vertex
+    # adding each vertex to the shortest_paths
     shortest_paths[source_node] = [source_node]
     for vertex in G:
         if vertex != source_node:
