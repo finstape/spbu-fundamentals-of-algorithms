@@ -43,18 +43,21 @@ def solve(maze: Maze) -> None:
     # creating graph
     G = nx.Graph()
     edges = []
+
+    # labyrinth exit coordinates
     X = None
 
     # adding edges in graph, given that the number of each cell is its serial number from 0 to n*m - 1
-    for i in range(len(maze.list_view)):
+    len_list_view = len(maze.list_view)
+    for i in range(len_list_view):
         for j in range(len(maze.list_view[i])):
             if maze.list_view[i][j] in " X":
                 if i > 0 and maze.list_view[i - 1][j] in " O":
-                    edges.append(((i - 1) * len(maze.list_view) + j, i * len(maze.list_view) + j))
+                    edges.append(((i - 1) * len_list_view + j, i * len_list_view + j))
                 if j > 0 and maze.list_view[i][j - 1] == " ":
-                    edges.append((i * len(maze.list_view) + j - 1, i * len(maze.list_view) + j))
+                    edges.append((i * len_list_view + j - 1, i * len_list_view + j))
                 if maze.list_view[i][j] == "X":
-                    X = i * len(maze.list_view) + j
+                    X = i * len_list_view + j
 
     # writing auxiliary data structures for bfs
     G.add_edges_from(edges)
