@@ -7,9 +7,12 @@ import numpy as np
 def time_taken(tickets: list[int], k: int) -> int:
     seconds_elapsed = 0
 
-    ##########################
-    ### PUT YOUR CODE HERE ###
-    ##########################
+    # solution for O(n)
+    for i in range(len(tickets)):
+        if i > k:
+            seconds_elapsed += min(tickets[k] - 1, tickets[i])
+        else:
+            seconds_elapsed += min(tickets[k], tickets[i])
 
     return seconds_elapsed
 
