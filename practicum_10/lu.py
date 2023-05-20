@@ -23,10 +23,17 @@ def lu(A: NDArray, permute: bool) -> tuple[NDArray, NDArray, NDArray]:
 
 
 def solve(L: NDArray, U: NDArray, P: NDArray, b: NDArray) -> NDArray:
-    Y = np.linalg.solve(L, P @ b)
-    X = np.linalg.solve(U, Y)
+    n = L.shape[0]
+    x, y = np.zeros(n), np.zeros(n)
+    b = P @ b
 
-    return X
+    for i in range(n):
+        y[i] = b[i] - L[i, :i] @ y[:i]
+
+    for i in range(n - 1, -1, -1):
+        x[i] = (y[i] - U[i, i + 1:] @ x[i + 1:]) / U[i, i]
+
+    return x
 
 
 def get_A_b(a_11: float, b_1: float) -> tuple[NDArray, NDArray]:
@@ -38,7 +45,7 @@ def get_A_b(a_11: float, b_1: float) -> tuple[NDArray, NDArray]:
 if __name__ == "__main__":
     # Let's implement the LU decomposition with and without pivoting
     # and check its stability depending on the matrix elements
-    p = 9  # modify from 7 to 16 to check instability
+    p = 8  # modify from 7 to 16 to check instability
     a_11 = 3 + 10 ** (-p)  # add/remove 10**(-p) to check instability
     b_1 = -16 + 10 ** (-p)  # add/remove 10**(-p) to check instability
     A, b = get_A_b(a_11, b_1)
